@@ -9,12 +9,12 @@ import (
 )
 
 type HTTPServer struct {
-	Addr string
+	Addr string `yaml:"address" env-required:"true"`
 }
 
 // env-default:"production"
 type Config struct {
-	Env         string `yaml:"env" env:"ENV" env-required:"true" `
+	Env         string `yaml:"env" env:"ENV" env-required:"true"`
 	StoragePath string `yaml:"storage_path" env-required:"true"`
 	HTTPServer  `yaml:"http_server"`
 }
@@ -23,7 +23,7 @@ func MustLoad() *Config {
 	var configPath string
 	configPath = os.Getenv("CONFIG_PATH")
 	if configPath == "" {
-		flags := flag.String("config", "", "path too the configuration file")
+		flags := flag.String("config", "", "path to the configuration file")
 		flag.Parse()
 
 		configPath = *flags
